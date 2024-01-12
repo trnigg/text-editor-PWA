@@ -22,8 +22,8 @@ export const putDb = async (content) => {
   const tx = jateDb.transaction("jate", "readwrite");
   // Open desired object store within db
   const store = tx.objectStore("jate");
-  // make request with desired method on store - put to edit
-  const request = store.put({ content: content }); // TODO: confirm key/value pair
+  // make request with desired method on store - put to edit - hardcode id to ensure only one entry
+  const request = store.put({ id: 1, content: content }); // TODO: confirm key/value pair
   // Get confirmation of request and log - don't need to return
   const response = await request;
   console.log("data saved:", response); // remove at later data
@@ -38,8 +38,8 @@ export const getDb = async () => {
   const tx = jateDb.transaction("jate", "readonly");
   // Open desired object store within db
   const store = tx.objectStore("jate");
-  // make request with desired method on store - getAll to return data
-  const request = store.getAll();
+  // make request with desired method on store - get to return data
+  const request = store.get(1); // Use the constant key to get only one entry - the one that get's updated above.
   // Get confirmation of request and return
   const response = await request;
   console.log("response.value:", response); // remove at later data
