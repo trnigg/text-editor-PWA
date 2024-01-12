@@ -5,6 +5,10 @@ const { CacheableResponsePlugin } = require("workbox-cacheable-response");
 const { ExpirationPlugin } = require("workbox-expiration");
 const { precacheAndRoute } = require("workbox-precaching/precacheAndRoute");
 
+// need to manually add the precache manifest to the array of files to cache
+// let precacheManifest = self.__WB_MANIFEST;
+// precacheManifest.push({ url: "/manifest.json", revision: null });
+// precacheAndRoute(precacheManifest);
 precacheAndRoute(self.__WB_MANIFEST);
 
 const pageCache = new CacheFirst({
