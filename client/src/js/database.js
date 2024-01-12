@@ -1,21 +1,49 @@
-import { openDB } from 'idb';
+import { openDB } from "idb";
 
 const initdb = async () =>
-  openDB('jate', 1, {
+  openDB("jate", 1, {
     upgrade(db) {
-      if (db.objectStoreNames.contains('jate')) {
-        console.log('jate database already exists');
+      if (db.objectStoreNames.contains("jate")) {
+        console.log("jate database already exists");
         return;
       }
-      db.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
-      console.log('jate database created');
+      db.createObjectStore("jate", { keyPath: "id", autoIncrement: true });
+      console.log("jate database created");
     },
   });
 
-// TODO: Add logic to a method that accepts some content and adds it to the database
-export const putDb = async (content) => console.error('putDb not implemented');
+// Logic for a method that accepts some content and adds it to the database
+// TODO: confirm whether we need to pass in an id
+export const putDb = async (content) => {
+  console.log("PUT to the database");
+  // Create connection to db and version (openDB)
+  const jateDb = await openDB("jate", 1);
+  // Create new transaction (tx) and specify db and privleges -  readwrite as editing data
+  const tx = jateDb.transaction("jate", "readwrite");
+  // Open desired object store within db
+  const store = tx.objectStore("jate");
+  // make request with desired method on store - put to edit
+  const request = store.put({ content: content }); // TODO: confirm key/value pair
+  // Get confirmation of request and log - don't need to return
+  const response = await request;
+  console.log("data saved:", response); // remove at later data
+};
 
-// TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+// Logic for a method that gets all the content from the database
+export const getDb = async () => {
+  console.log("GET from the database");
+  // Create connection to db and version (openDB)
+  const jateDb = await openDB("jate", 1);
+  // Create new transaction (tx) and specify db and privleges - readonly as not manipulating data
+  const tx = jateDb.transaction("jate", "readonly");
+  // Open desired object store within db
+  const store = tx.objectStore("jate");
+  // make request with desired method on store - getAll to return data
+  const request = store.getAll();
+  // Get confirmation of request and return
+  const response = await request;
+  console.log("response.value:", response); // remove at later data
+  return response;
+};
 
 initdb();
