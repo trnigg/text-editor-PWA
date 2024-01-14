@@ -40,7 +40,7 @@ module.exports = () => {
         description: "Takes notes with JavaScript syntax highlighting!",
         background_color: "#225ca3",
         theme_color: "#225ca3",
-        start_url: "./",
+        start_url: "text-editor-pwa-trn-89aeae7a4cf4.herokuapp.com/",
         publicPath: "./",
         icons: [
           {
