@@ -37,7 +37,8 @@ registerRoute(({ request }) => request.mode === "navigate", pageCache);
 
 // Adds asset caching:
 registerRoute(
-  ({ request }) => ["style", "script", "worker"].includes(request.destination),
+  ({ request }) =>
+    ["style", "script", "worker", "assets"].includes(request.destination),
   // Could also use StaleWhileRevalidate but as CacheFirst is imported for us and the assets are static, using that instead
   new CacheFirst({
     cacheName: "asset-cache",
