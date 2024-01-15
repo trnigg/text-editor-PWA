@@ -13,9 +13,7 @@ const initdb = async () =>
   });
 
 // Logic for a method that accepts some content and adds it to the database
-// TODO: confirm whether we need to pass in an id
 export const putDb = async (content) => {
-  console.log("PUT to the database");
   // Create connection to db and version (openDB)
   const jateDb = await openDB("jate", 1);
   // Create new transaction (tx) and specify db and privleges -  readwrite as editing data
@@ -26,12 +24,10 @@ export const putDb = async (content) => {
   const request = store.put({ id: 1, content: content }); // TODO: confirm key/value pair
   // Get confirmation of request and log - don't need to return
   const response = await request;
-  console.log("data saved:", response); // remove at later data
 };
 
 // Logic for a method that gets all the content from the database
 export const getDb = async () => {
-  console.log("GET from the database");
   // Create connection to db and version (openDB)
   const jateDb = await openDB("jate", 1);
   // Create new transaction (tx) and specify db and privleges - readonly as not manipulating data
@@ -42,7 +38,6 @@ export const getDb = async () => {
   const request = store.get(1); // Use the constant key to get only one entry - the one that get's updated above.
   // Get confirmation of request and return
   const response = await request;
-  console.log("response.value:", response); // remove at later data
   return response;
 };
 
